@@ -8,7 +8,7 @@
 </head>
 <body>
   <header>
-    <h1>Zonex Digital Store</h1>
+    <h1>Zonex</h1>
     <p>Buy PDFs, Tools, Guides, and Legal Games</p>
   </header>
 
@@ -19,6 +19,11 @@
     <button class="tab-btn" data-target="tools">Tools</button>
     <button class="tab-btn" data-target="guides">Guides</button>
   </nav>
+
+  <!-- Search Bar -->
+  <div class="container">
+    <input type="text" id="searchInput" placeholder="Search products..." class="search-input">
+  </div>
 
   <div class="container">
     <!-- Games Section -->
@@ -83,6 +88,7 @@
   </footer>
 
   <script>
+    // Tabs
     const tabs = document.querySelectorAll('.tab-btn');
     const lists = document.querySelectorAll('.product-list');
 
@@ -93,8 +99,30 @@
 
         lists.forEach(list => list.classList.remove('active'));
         document.getElementById(tab.dataset.target).classList.add('active');
+
+        // Reset search when switching tabs
+        document.getElementById('searchInput').value = '';
+        filterProducts('');
       });
     });
+
+    // Search
+    const searchInput = document.getElementById('searchInput');
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      filterProducts(query);
+    });
+
+    function filterProducts(query) {
+      const activeList = document.querySelector('.product-list.active');
+      const products = activeList.querySelectorAll('.product');
+
+      products.forEach(product => {
+        const text = product.querySelector('h3').textContent.toLowerCase();
+        product.style.display = text.includes(query) ? 'block' : 'none';
+      });
+    }
   </script>
 </body>
 </html>
