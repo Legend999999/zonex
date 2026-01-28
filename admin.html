@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zonex Admin Panel</title>
+<style>
+:root {
+  --bg: #f4f4f9;
+  --card: #ffffff;
+  --primary: #1f2937;
+  --accent: #3b82f6;
+  --danger: #ef4444;
+  --text: #111827;
+  --text-light: #6b7280;
+  --radius: 12px;
+  --shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+* { box-sizing: border-box; margin:0; padding:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background: var(--bg); color: var(--text); padding:20px; }
+
+header { text-align:center; margin-bottom:40px; }
+header h1 { font-size:2.5rem; color: var(--primary); margin-bottom:10px; }
+header p { font-size:1.1rem; color: var(--text-light); }
+
+.container { max-width:600px; margin:0 auto; background:var(--card); padding:30px; border-radius:var(--radius); box-shadow:var(--shadow); }
+
+h2 { margin-bottom:20px; color: var(--accent); }
+
+input, select, button {
+  width:100%;
+  padding:12px 15px;
+  margin-bottom:15px;
+  border-radius:var(--radius);
+  border:1px solid #ccc;
+  font-size:1rem;
+}
+
+input:focus, select:focus { outline:none; border-color: var(--accent); box-shadow:0 0 5px rgba(59,130,246,0.3); }
+
+button { background: var(--accent); color:#fff; border:none; cursor:pointer; font-weight:bold; transition:0.3s; }
+button:hover { background:#2563eb; transform: translateY(-2px); }
+button.remove { background: var(--danger); }
+button.remove:hover { background:#dc2626; }
+
+.card { background: var(--card); padding:20px; margin-bottom:30px; border-radius:var(--radius); box-shadow:var(--shadow); }
+
+@media (max-width:600px){
+  .container { padding:20px; }
+  header h1 { font-size:2rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Zonex Admin Panel</h1>
+  <p>Manage products easily</p>
+</header>
+
+<div class="container">
+
+  <!-- Add Product -->
+  <div class="card">
+    <h2>Add Product</h2>
+    <select id="categorySelect">
+      <option value="games">Games</option>
+      <option value="pdfs">PDFs</option>
+      <option value="tools">Tools</option>
+      <option value="guides">Guides</option>
+    </select>
+    <input type="text" id="productName" placeholder="Product Name">
+    <input type="text" id="productPrice" placeholder="Price">
+    <input type="text" id="productDesc" placeholder="Description">
+    <button id="addProductBtn">Add Product</button>
+  </div>
+
+  <!-- Edit Product -->
+  <div class="card">
+    <h2>Edit Product</h2>
+    <select id="editCategory">
+      <option value="games">Games</option>
+      <option value="pdfs">PDFs</option>
+      <option value="tools">Tools</option>
+      <option value="guides">Guides</option>
+    </select>
+    <select id="editProduct"></select>
+    <input type="text" id="editName" placeholder="New Name">
+    <input type="text" id="editPrice" placeholder="New Price">
+    <input type="text" id="editDesc" placeholder="New Description">
+    <button id="editProductBtn">Update Product</button>
+  </div>
+
+  <!-- Remove Product -->
+  <div class="card">
+    <h2>Remove Product</h2>
+    <select id="removeCategory">
+      <option value="games">Games</option>
+      <option value="pdfs">PDFs</option>
+      <option value="tools">Tools</option>
+      <option value="guides">Guides</option>
+    </select>
+    <select id="removeProduct"></select>
+    <button id="removeProductBtn" class="remove">Remove Product</button>
+  </div>
+
+</div>
+
+<script>
+async function fetchProducts() {
+  const res = await fetch('/products');
+  return await res.json();
+}
+
+async function updateOptions() {
+  const data = await fetchProducts();
+
+  // Remove dropdown
+  const removeCat = document.getElementById('removeCategory').value;
+  const removeSelect = document.getElementById('removeProduct');
+  removeSelect.innerHTML = '';
+  data[removeCat].forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.name;
+    opt.textContent = `${p.name} - ${p.price} IQD - ${p.description || ''}`;
+    removeSelect.appendChild(opt);
+  });
+
+  // Edit dropdown
+  const editCat = document.getElementById('editCategory').value;
+  const editSelect = document.getElementById('editProduct');
+  editSelect.innerHTML = '';
+  data[editCat].forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.name;
+    opt.textContent = `${p.name} - ${p.price} IQD - ${p.description || ''}`;
+    editSelect.appendChild(opt);
+  });
+}
+
+// Add product
+document.getElementById('addProductBtn').addEventListener('click', async () => {
+  const category = document.getElementById('categorySelect').value;
+  const name = document.getElementById('productName').value.trim();
+  const price = document.getElementById('productPrice').value.trim();
+  const description = document.getElementById('productDesc').value.trim();
+  if (!name || !price) return alert('Fill all fields');
+
+  await fetch('/add', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({ category, name, price, description })
+  });
+
+  alert('Product added');
+  document.getElementById('productName').value = '';
+  document.getElementById('productPrice').value = '';
+  document.getElementById('productDesc').value = '';
+  updateOptions();
+});
+
+// Edit product
+document.getElementById('editProductBtn').addEventListener('click', async () => {
+  const category = document.getElementById('editCategory').value;
+  const oldName = document.getElementById('editProduct').value;
+  const newName = document.getElementById('editName').value.trim();
+  const newPrice = document.getElementById('editPrice').value.trim();
+  const newDesc = document.getElementById('editDesc').value.trim();
+  if (!oldName) return alert('Select a product to edit');
+
+  await fetch('/edit', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({ category, oldName, newName, newPrice, newDesc })
+  });
+
+  alert('Product updated');
+  document.getElementById('editName').value = '';
+  document.getElementById('editPrice').value = '';
+  document.getElementById('editDesc').value = '';
+  updateOptions();
+});
+
+// Remove product
+document.getElementById('removeProductBtn').addEventListener('click', async () => {
+  const category = document.getElementById('removeCategory').value;
+  const name = document.getElementById('removeProduct').value.split(' - ')[0];
+  if (!name) return alert('Select a product to remove');
+
+  await fetch('/remove', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({ category, name })
+  });
+
+  alert('Product removed');
+  updateOptions();
+});
+
+// Update dropdowns when category changes
+document.getElementById('removeCategory').addEventListener('change', updateOptions);
+document.getElementById('editCategory').addEventListener('change', updateOptions);
+
+// Initial load
+updateOptions();
+</script>
+</body>
+</html>
