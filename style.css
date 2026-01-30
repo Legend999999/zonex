@@ -32,14 +32,15 @@ body {
 
 .line {
   position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: 200px solid red; /* default height, overridden inline */
-  filter: drop-shadow(0 0 6px red) drop-shadow(0 0 12px rgb(25, 0, 255));
-  animation: moveLine linear infinite;
+  width: 60px;               /* size of your gif */
+  height: 60px;
+  background: url("gif.gif") no-repeat center;
+  background-size: contain;  /* scale gif to fit */
+  animation: moveLine 5s linear infinite;
+  filter: drop-shadow(0 0 6px red) drop-shadow(0 0 12px orange);
+  /* remove all border stuff */
 }
+
 
 @keyframes moveLine {
   0% { transform: translateX(-50px) translateY(0) rotate(0deg); }
