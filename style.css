@@ -64,7 +64,7 @@ body {
   height: 60px;
   background: url("gif.gif") no-repeat center;
   background-size: contain;
-  filter: drop-shadow(0 0 6px red) drop-shadow(0 0 12px orange);
+  filter: drop-shadow(0 0 6px rgb(29, 0, 133)) drop-shadow(0 0 12px orange);
 }
 
 /* Different animations for each line */
