@@ -1,11 +1,41 @@
 /* style.css - Fully Professional Look */
 :root {
-  --primary: #1f2937;    /* dark gray-blue */
-  --secondary: #3b82f6;  /* bright modern blue */
-  --bg: #f4f4f9;         /* soft light gray for whole background */
-  --card-bg: #ffffff;     /* slightly off-white cards */
-  --text: #111827;        /* main dark text */
-  --text-light: #6b7280;  /* medium gray text */
+
+  --bg: #f4f4f9;        /* soft light gray */
+  --card-bg: #ffffff;    /* slightly off-white */
+  --text: #111827;       /* main dark text */
+  --text-light: #6b7280; /* medium gray text */
+  
+  animation: animateColors 6s linear infinite alternate;
+}
+
+:root {
+  --primary: #1f2937;
+  --secondary: #3b82f6;
+}
+
+/* Animate the whole page colors smoothly */
+body {
+  transition: background 3s linear;
+}
+
+header {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  animation: hueShift 10s linear infinite;
+}
+
+@keyframes hueShift {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+
+
+
+
+
+body {
+  animation: colorShift 6s linear infinite alternate;
 }
 
 * {
@@ -19,8 +49,6 @@ body {
   color: var(--text);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-
 .bg {
   position: fixed;
   top:0; left:0;
@@ -32,47 +60,95 @@ body {
 
 .line {
   position: absolute;
-  width: 60px;               /* size of your gif */
+  width: 60px;
   height: 60px;
   background: url("gif.gif") no-repeat center;
-  background-size: contain;  /* scale gif to fit */
-  animation: moveLine 5s linear infinite;
+  background-size: contain;
   filter: drop-shadow(0 0 6px red) drop-shadow(0 0 12px orange);
-  /* remove all border stuff */
 }
 
+/* Different animations for each line */
+.line1  { animation: move1 12s linear infinite; }
+.line2  { animation: move2 14s linear infinite; }
+.line3  { animation: move3 16s linear infinite; }
+.line4  { animation: move4 10s linear infinite; }
+.line5  { animation: move5 13s linear infinite; }
+.line6  { animation: move6 15s linear infinite; }
+.line7  { animation: move7 11s linear infinite; }
+.line8  { animation: move8 17s linear infinite; }
+.line9  { animation: move9 12.5s linear infinite; }
+.line10 { animation: move10 14.5s linear infinite; }
+.line11 { animation: move11 13.2s linear infinite; }
+.line12 { animation: move12 16.3s linear infinite; }
+.line13 { animation: move13 11.7s linear infinite; }
+.line14 { animation: move14 15.8s linear infinite; }
+.line15 { animation: move15 12.6s linear infinite; }
 
-@keyframes moveLine {
-  0% { transform: translateX(-50px) translateY(0) rotate(0deg); }
-  50% { transform: translateX(110vw) translateY(50vh) rotate(20deg); }
-  100% { transform: translateX(-50px) translateY(0) rotate(0deg); }
-}
+/* Random movement keyframes */
+@keyframes move1  { 0%{transform:translate(0,0) rotate(0deg);} 50%{transform:translate(100vw,20vh) rotate(30deg);} 100%{transform:translate(0,0) rotate(0deg);} }
+@keyframes move2  { 0%{transform:translate(0,0) rotate(10deg);} 50%{transform:translate(90vw,40vh) rotate(-20deg);} 100%{transform:translate(0,0) rotate(10deg);} }
+@keyframes move3  { 0%{transform:translate(0,0) rotate(-15deg);} 50%{transform:translate(80vw,60vh) rotate(25deg);} 100%{transform:translate(0,0) rotate(-15deg);} }
+@keyframes move4  { 0%{transform:translate(0,0) rotate(5deg);} 50%{transform:translate(110vw,50vh) rotate(-10deg);} 100%{transform:translate(0,0) rotate(5deg);} }
+@keyframes move5  { 0%{transform:translate(0,0) rotate(-20deg);} 50%{transform:translate(95vw,30vh) rotate(15deg);} 100%{transform:translate(0,0) rotate(-20deg);} }
+@keyframes move6  { 0%{transform:translate(0,0) rotate(12deg);} 50%{transform:translate(105vw,70vh) rotate(-25deg);} 100%{transform:translate(0,0) rotate(12deg);} }
+@keyframes move7  { 0%{transform:translate(0,0) rotate(-5deg);} 50%{transform:translate(100vw,35vh) rotate(20deg);} 100%{transform:translate(0,0) rotate(-5deg);} }
+@keyframes move8  { 0%{transform:translate(0,0) rotate(8deg);} 50%{transform:translate(90vw,60vh) rotate(-15deg);} 100%{transform:translate(0,0) rotate(8deg);} }
+@keyframes move9  { 0%{transform:translate(0,0) rotate(-12deg);} 50%{transform:translate(110vw,40vh) rotate(30deg);} 100%{transform:translate(0,0) rotate(-12deg);} }
+@keyframes move10 { 0%{transform:translate(0,0) rotate(5deg);} 50%{transform:translate(95vw,50vh) rotate(-10deg);} 100%{transform:translate(0,0) rotate(5deg);} }
+@keyframes move11 { 0%{transform:translate(0,0) rotate(-8deg);} 50%{transform:translate(100vw,45vh) rotate(20deg);} 100%{transform:translate(0,0) rotate(-8deg);} }
+@keyframes move12 { 0%{transform:translate(0,0) rotate(10deg);} 50%{transform:translate(105vw,25vh) rotate(-20deg);} 100%{transform:translate(0,0) rotate(10deg);} }
+@keyframes move13 { 0%{transform:translate(0,0) rotate(-18deg);} 50%{transform:translate(95vw,55vh) rotate(25deg);} 100%{transform:translate(0,0) rotate(-18deg);} }
+@keyframes move14 { 0%{transform:translate(0,0) rotate(6deg);} 50%{transform:translate(90vw,30vh) rotate(-12deg);} 100%{transform:translate(0,0) rotate(6deg);} }
+@keyframes move15 { 0%{transform:translate(0,0) rotate(-10deg);} 50%{transform:translate(110vw,60vh) rotate(18deg);} 100%{transform:translate(0,0) rotate(-10deg);} }
 
 body {
   background: transparent;
 }
-
-
-body {
+.stars {
+  position: absolute;
+  width: 200%;       /* make it wider so it can scroll */
+  height: 100%;
   background: transparent;
+  z-index: -2;
+
+  background-image: 
+    radial-gradient(1px 1px, #fff, transparent),
+    radial-gradient(2px 2px, #fff, transparent),
+    radial-gradient(1.5px 1.5px, #fff, transparent),
+    radial-gradient(1px 1px, #fff, transparent),
+    radial-gradient(2px 2px, #fff, transparent),
+    radial-gradient(1px 1px, #fff, transparent);
+  background-repeat: repeat;
+  background-size: 50px 50px;
+
+  animation: moveStars 30s linear infinite;
+}
+
+@keyframes moveStars {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* scroll to left, loop */
 }
 
 
 
-body {
-  background: transparent;
-}
 
 
-
-/* Header */
 header {
   background: linear-gradient(90deg, var(--primary), var(--secondary));
   color: #fff;
   text-align: center;
   padding: 40px 20px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  background-size: 400% 400%;
+  animation: gradientShift 10s ease infinite;
 }
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 
 header h1 {
   font-size: 2.5rem;
