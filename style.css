@@ -1,4 +1,4 @@
-<style>
+
   
 :root {
   --primary: #00ff88;
@@ -52,4 +52,5 @@ body { background: var(--bg-dark); font-family:'Segoe UI', sans-serif; color: va
 /* Responsive */
 @media(max-width:768px){ .glass-card h1{ font-size:3rem; } .glass-card{ padding:2rem; } .scrolling-grid{ grid-template-columns:repeat(2,1fr); left:-25%; width:150%; } .col:nth-child(3), .col:nth-child(4){ display:none; } .button-group{ flex-direction:column; gap:10px; } }
 
-</style>
+
+
